@@ -16,7 +16,7 @@ Widget::Widget(QWidget *parent) :
     ui->setupUi(this);
 
     client=new QTcpSocket;
-    qImageBuffer=(uchar *)(malloc(640 * 480 *4 *sizeof(uchar)));
+    qImageBuffer=(uchar *)(malloc(320 * 240 *4 *sizeof(uchar)));
 
     ui->Image->setStyleSheet("border-width: 1px;border-style: solid;border-color: rgb(0, 0, 110);");
     ui->statuslabel->setStyleSheet("border-width: 1px;border-style: solid;border-color: rgb(0, 0, 110);");
@@ -49,8 +49,8 @@ void Widget::on_stop_clicked()
 void Widget::on_record_clicked()
 {
     CvSize size;
-    size.width=640;
-    size.height=480;
+    size.width=320;
+    size.height=240;
     QTime time;
     time=time.currentTime();//获得当前时间，如:08:37:34
     QString Tstr=time.toString()+".avi";//转换成QString类型，如08:37:34.avi
@@ -116,6 +116,9 @@ void Widget::read()
                 size.height=image.height();
                 IplImage* img=cvCreateImage(size,IPL_DEPTH_8U, 3);//与cvReleaseImage配对使用
                 QImageToIplImage(&image,img);
+
+                //***send img to hand gesture***/
+
                 //***put time on the IplImage***/
                 QTime timer;
                 timer=timer.currentTime();

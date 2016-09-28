@@ -1,30 +1,29 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2012-09-17T08:17:46
-#
-#-------------------------------------------------
+QT       += core gui
+QT       += network
+CONFIG += warn_off
 
- QT += core gui widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = IHandRecognition
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
-        widget.cpp \
+        handgesturedialog.cpp \
+    SRC/GestrueInfo.cpp \
+    SRC/AIGesture.cpp \
     IplImageToQImage.cpp
 
-HEADERS  += widget.h \
+HEADERS  += handgesturedialog.h \
+    SRC/GestureStruct.h \
+    SRC/GestrueInfo.h \
+    SRC/AIGesture.h \
     IplImageToQImage.h
 
-FORMS    += widget.ui
-QT       += network
+FORMS    += handgesturedialog.ui
 
 INCLUDEPATH += C:\Qt\opencv3.0_use\include
 INCLUDEPATH += C:\Qt\opencv3.0_use\include\opencv
 INCLUDEPATH += C:\Qt\opencv3.0_use\include\opencv2
 LIBS += C:\Qt\opencv3.0_use\lib\libopencv_*.a
 
-OTHER_FILES += \
-    haarcascade_frontalface_alt2.xml \
-    haarcascade_frontalface_alt2.xml
+LIBS += -lpthread

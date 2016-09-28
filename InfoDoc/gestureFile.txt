@@ -1,0 +1,12 @@
+Eight
+Five
+Four
+Night
+OK
+One
+Seven
+Six
+Stop
+Three
+Two
+手势个数是：11
