@@ -28,9 +28,9 @@ void QImageToIplImage(const QImage * qImage,IplImage *charIplImageBuffer)
         unsigned char* charTemp=(unsigned char*)(charIplImageBuffer->imageData+y*charIplImageBuffer->widthStep);
         for (int x = 0; x < width; ++x)
         {
-            charTemp[3*x+0] = (unsigned char) qBlue(qImage->pixel(x, y));//取B通道数据
-            charTemp[3*x+1] = (unsigned char) qGreen(qImage->pixel(x, y));//取G通道数据
-            charTemp[3*x+2] = (unsigned char) qRed(qImage->pixel(x, y));//取R通道数据
+            charTemp[3*x+0] = (unsigned char) qBlue(qImage->pixel(x, y));//鍙朆閫氶亾鏁版嵁
+            charTemp[3*x+1] = (unsigned char) qGreen(qImage->pixel(x, y));//鍙朑閫氶亾鏁版嵁
+            charTemp[3*x+2] = (unsigned char) qRed(qImage->pixel(x, y));//鍙朢閫氶亾鏁版嵁
         }
     }
 }

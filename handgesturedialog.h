@@ -68,8 +68,8 @@ private:
     CvSeq* pt_seq;
     string result[8];
     int gesturecount;
-    CvPoint2D32f center;//ÓÃÀ´´¢´æÊÖÊÆµÄÖÊĞÄ
-    float r;//ÊÖÊÆµÄ°ë¾¶
+    CvPoint2D32f center;//ç”¨æ¥å‚¨å­˜æ‰‹åŠ¿çš„è´¨å¿ƒ
+    float r;//æ‰‹åŠ¿çš„åŠå¾„
     CvPoint* pt;
     string com_result;
     MyRect rect;

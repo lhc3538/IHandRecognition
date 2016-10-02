@@ -52,10 +52,10 @@ void Widget::on_record_clicked()
     size.width=320;
     size.height=240;
     QTime time;
-    time=time.currentTime();//»ñµÃµ±Ç°Ê±¼ä£¬Èç:08:37:34
-    QString Tstr=time.toString()+".avi";//×ª»»³ÉQStringÀàĞÍ£¬Èç08:37:34.avi
-    Tstr=Tstr.replace(QChar(':'),QLatin1String("-"));//½«:»»³É-£¬ÒòÎªwindowsÏÂÎÄ¼şÃû²»ÄÜº¬:
-    const char* filen=Tstr.toStdString().data();//×ª»»³Éconst char*ĞÍµÄÎÄ¼şÃû
+    time=time.currentTime();//è·å¾—å½“å‰æ—¶é—´ï¼Œå¦‚:08:37:34
+    QString Tstr=time.toString()+".avi";//è½¬æ¢æˆQStringç±»å‹ï¼Œå¦‚08:37:34.avi
+    Tstr=Tstr.replace(QChar(':'),QLatin1String("-"));//å°†:æ¢æˆ-ï¼Œå› ä¸ºwindowsä¸‹æ–‡ä»¶åä¸èƒ½å«:
+    const char* filen=Tstr.toStdString().data();//è½¬æ¢æˆconst char*å‹çš„æ–‡ä»¶å
     videowr=cvCreateVideoWriter(filen,CV_FOURCC('M','J','P','G'),20,size,1);
     record=true;
 }
@@ -96,7 +96,7 @@ void Widget::read()
 
     mutex.lock();
     tmpBlock=client->readAll();
-    block1.append(tmpBlock);//±£´æÊµ¼Ê¶Áµ½µÄÊı¾İ
+    block1.append(tmpBlock);//ä¿å­˜å®é™…è¯»åˆ°çš„æ•°æ®
 
     if((SOIPos=block1.indexOf(SOIstr))!= -1)
     {
@@ -114,7 +114,7 @@ void Widget::read()
                 CvSize size;
                 size.width=image.width();
                 size.height=image.height();
-                IplImage* img=cvCreateImage(size,IPL_DEPTH_8U, 3);//ÓëcvReleaseImageÅä¶ÔÊ¹ÓÃ
+                IplImage* img=cvCreateImage(size,IPL_DEPTH_8U, 3);//ä¸cvReleaseImageé…å¯¹ä½¿ç”¨
                 QImageToIplImage(&image,img);
 
                 //***send img to hand gesture***/
@@ -132,7 +132,7 @@ void Widget::read()
 
                 //***IplImage --- QImage and display
 //                cvNamedWindow("Image",1);
-//                //ÏÔÊ¾Í¼Ïñ
+//                //æ˜¾ç¤ºå›¾åƒ
 //                cvShowImage("Image",pImg);
 
                 QImage* qImage=new QImage(qImageBuffer, img->width, img->height, QImage::Format_RGB32);
@@ -143,9 +143,9 @@ void Widget::read()
                 delete qImage;
                 //***record the IplImage***/
                 if(record==true)
-                    cvWriteFrame(videowr,img);//Â¼ÖÆÊÓÆµ
+                    cvWriteFrame(videowr,img);//å½•åˆ¶è§†é¢‘
 
-                cvReleaseImage(&img);//ÓëcvCreateImageÅä¶ÔÊ¹ÓÃ
+                cvReleaseImage(&img);//ä¸cvCreateImageé…å¯¹ä½¿ç”¨
                 ba.clear();
             }
             block1.remove(0,EOIPos+1);

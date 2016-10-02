@@ -180,12 +180,12 @@ void HandGestureDialog::on_pushButton_ShowPause_clicked()
     if(isRun == 1)
     {
         timer->stop();
-        ui->pushButton_ShowPause->setText (tr("ºÃ–¯≈ƒ…„"));
+        ui->pushButton_ShowPause->setText (tr("ÁªßÁª≠ÊãçÊëÑ"));
     }
     else
     {
         timer->start(time_intervals);
-        ui->pushButton_ShowPause->setText (tr("‘›Õ£"));
+        ui->pushButton_ShowPause->setText (tr("ÊöÇÂÅú"));
     }
     isRun *= (-1);
 }
@@ -199,7 +199,7 @@ void HandGestureDialog::on_pushButton_StartTrain_clicked()
     process->show ();
     gesture.setMainUIPointer (this);
     gesture.Train(process);
-    QMessageBox::about (this,tr("ÕÍ≥…"),tr(" ÷ ∆—µ¡∑ƒ£–ÕÕÍ≥…"));
+    QMessageBox::about (this,tr("ÂÆåÊàê"),tr("ÊâãÂäøËÆ≠ÁªÉÊ®°ÂûãÂÆåÊàê"));
 }
 
 void HandGestureDialog::on_pushButton_StartRecongnise_clicked()
@@ -213,6 +213,8 @@ void HandGestureDialog::on_pushButton_StartRecongnise_clicked()
     status_switch = Nothing;
 
     status_switch = Recongnise;
+
+    cvNamedWindow("Example1",CV_WINDOW_AUTOSIZE);
 }
 
 void HandGestureDialog::on_comboBox_ShowDelay_activated(int index)
@@ -264,7 +266,7 @@ void HandGestureDialog::read()
 
     mutex.lock();
     tmpBlock=client->readAll();
-    block1.append(tmpBlock);//±£¥Ê µº ∂¡µΩµƒ ˝æ›
+    block1.append(tmpBlock);//‰øùÂ≠òÂÆûÈôÖËØªÂà∞ÁöÑÊï∞ÊçÆ
 
     if((SOIPos=block1.indexOf(SOIstr))!= -1)
     {
@@ -282,7 +284,7 @@ void HandGestureDialog::read()
                 CvSize size;
                 size.width=image.width();
                 size.height=image.height();
-                IplImage* img=cvCreateImage(size,IPL_DEPTH_8U, 3);//”ÎcvReleaseImage≈‰∂‘ π”√
+                IplImage* img=cvCreateImage(size,IPL_DEPTH_8U, 3);//‰∏écvReleaseImageÈÖçÂØπ‰ΩøÁî®
                 QImageToIplImage(&image,img);
 
                 //***send img to hand gesture***/
@@ -293,20 +295,23 @@ void HandGestureDialog::read()
                 image2 = image2.rgbSwapped();
                 image2 = image2.scaled(320,240);
                 ui->label_CameraShow->setPixmap(QPixmap::fromImage(image2));
-                gesture.SkinDetect (img,afterSkin);
+
 
                 /*next to opencv*/
 
                 if(status_switch == Recongnise)
                 {
+                    //gesture.SkinDetect (img,afterSkin);
+
+                    //cvShowImage("Example1", afterSkin);
                     // Flips the frame into mirror image
-                    cvFlip(img,img,1);
+                    //cvFlip(img,img,1);
 
                     // Call the function to detect and draw the hand positions
                     StartRecongizeHand(img);
                 }
 
-                cvReleaseImage(&img);//”ÎcvCreateImage≈‰∂‘ π”√
+                cvReleaseImage(&img);//‰∏écvCreateImageÈÖçÂØπ‰ΩøÁî®
                 ba.clear();
             }
             block1.remove(0,EOIPos+1);

@@ -72,7 +72,7 @@ void CAIGesture::EqualImage(IplImage* src,IplImage* dst)
     cvSaveImage("gray.jpg",gray);
     cvEqualizeHist(gray,gray);
     cvSaveImage("gray2.jpg",gray);
-    cvCvtColor(gray,dst,CV_GRAY2BGR);//opencvÎŞ·¨½«Í¼ÏñÖØĞÂ×ªÎªRGBÄ£Ê½
+    cvCvtColor(gray,dst,CV_GRAY2BGR);//opencvæ— æ³•å°†å›¾åƒé‡æ–°è½¬ä¸ºRGBæ¨¡å¼
     cvReleaseImage(&gray);
 }
 
@@ -175,7 +175,7 @@ void CAIGesture::ComputeCenter(CvSeq* (&contour),CvPoint& center,float& radius)
     for(int i=1;i<hullcount;i++)
     {
         pt=**CV_GET_SEQ_ELEM(CvPoint*,hull,i);//get each point
-        tmpr1=sqrt((double)((center.x-pt.x)*(center.x-pt.x))+(double)((center.y-pt.y)*(center.y-pt.y)));//¼ÆËãÓëÖĞĞÄµãµÄ´óĞ¡
+        tmpr1=sqrt((double)((center.x-pt.x)*(center.x-pt.x))+(double)((center.y-pt.y)*(center.y-pt.y)));//è®¡ç®—ä¸ä¸­å¿ƒç‚¹çš„å¤§å°
         if(tmpr1>r)//as the max radius
             r=tmpr1;
     }
@@ -197,14 +197,14 @@ float count[FeatureNum])
     float angle1_tmp[200]={0},angle2_tmp[200]={0},angle1[50]={0},angle2[50]={0};//temp instance to calculate angule
     int angle1_tmp_count=0,angle2_tmp_count=0,angle1count=0,angle2count=0,anglecount=0;
 
-    for(int i=0;i<FeatureNum;i++)//·ÖFeatureNum²ã½øĞĞÌØÕ÷ÌáÈ¡£¨Ò²¾ÍÊÇ5²ã£©·ÖÎö
+    for(int i=0;i<FeatureNum;i++)//åˆ†FeatureNumå±‚è¿›è¡Œç‰¹å¾æå–ï¼ˆä¹Ÿå°±æ˜¯5å±‚ï¼‰åˆ†æ
     {
         R=(i+4)*radius/9;
         for(int j=0;j<=3600;j++)
         {
             if(j<=900)
             {
-                a1=(int)(R*sin(j*3.14/1800));//Õâ¸öÒª×Ô¼ºÊµ¼Ê»­Ò»ÕÅÍ¼¾ÍÃ÷°×ÁË
+                a1=(int)(R*sin(j*3.14/1800));//è¿™ä¸ªè¦è‡ªå·±å®é™…ç”»ä¸€å¼ å›¾å°±æ˜ç™½äº†
                 b1=(int)(R*cos(j*3.14/1800));
                 x1=center.x-b1;
                 y1=center.y-a1;
@@ -257,12 +257,12 @@ float count[FeatureNum])
             {
                 if((int)data[y1*step+x1]==255&&(int)data[y2*step+x2]==0)
                 {
-                    angle1_tmp[angle1_tmp_count]=(float)(j*0.1);//´Ó·ôÉ«µ½·Ç·ôÉ«µÄ½Ç¶È
+                    angle1_tmp[angle1_tmp_count]=(float)(j*0.1);//ä»è‚¤è‰²åˆ°éè‚¤è‰²çš„è§’åº¦
                     angle1_tmp_count++;
                 }
                 else if((int)data[y1*step+x1]==0&&(int)data[y2*step+x2]==255)
                 {
-                    angle2_tmp[angle2_tmp_count]=(float)(j*0.1);//´Ó·Ç·ôÉ«µ½·ôÉ«µÄ½Ç¶È
+                    angle2_tmp[angle2_tmp_count]=(float)(j*0.1);//ä»éè‚¤è‰²åˆ°è‚¤è‰²çš„è§’åº¦
                     angle2_tmp_count++;
                 }
             }
@@ -270,7 +270,7 @@ float count[FeatureNum])
         int j=0;
         for(j=0;j<angle1_tmp_count;j++)
         {
-            if(angle1_tmp[j]-angle1_tmp[j-1]<0.2)//ºöÂÔÌ«Ğ¡µÄ½Ç¶È
+            if(angle1_tmp[j]-angle1_tmp[j-1]<0.2)//å¿½ç•¥å¤ªå°çš„è§’åº¦
                 continue;
             angle1[angle1count]=angle1_tmp[j];
             angle1count++;
@@ -288,10 +288,10 @@ float count[FeatureNum])
         {
             if(angle1[0]>angle2[0])
             {
-                if(angle1[j]-angle2[j]<7)//ºöÂÔĞ¡ÓÚ7¶ÈµÄ½Ç¶È£¬ÒòÎªÈËµÄÊÖÖ¸Ò»°ã¶¼´óÓÚÕâ¸öÖµ
+                if(angle1[j]-angle2[j]<7)//å¿½ç•¥å°äº7åº¦çš„è§’åº¦ï¼Œå› ä¸ºäººçš„æ‰‹æŒ‡ä¸€èˆ¬éƒ½å¤§äºè¿™ä¸ªå€¼
                     continue;
-                angle[i][anglecount]=(float)((angle1[j]-angle2[j])*0.01);//·ôÉ«µÄ½Ç¶È
-                anglecha[i][anglecount]=(float)((angle2[j+1]-angle1[j])*0.01);//·Ç·ôÉ«µÄ½Ç¶È£¬ÀıÈçÊÖÖ¸¼äµÄ½Ç¶È
+                angle[i][anglecount]=(float)((angle1[j]-angle2[j])*0.01);//è‚¤è‰²çš„è§’åº¦
+                anglecha[i][anglecount]=(float)((angle2[j+1]-angle1[j])*0.01);//éè‚¤è‰²çš„è§’åº¦ï¼Œä¾‹å¦‚æ‰‹æŒ‡é—´çš„è§’åº¦
                 anglecount++;
             }
             else
@@ -324,7 +324,7 @@ float count[FeatureNum])
     }
 }
 
-void CAIGesture::OneGestureTrain(QDir GestureDir,CvFileStorage *fs,GestureStruct gesture)//¶Ôµ¥ÕÅÍ¼Æ¬½øĞĞÑµÁ·
+void CAIGesture::OneGestureTrain(QDir GestureDir,CvFileStorage *fs,GestureStruct gesture)//å¯¹å•å¼ å›¾ç‰‡è¿›è¡Œè®­ç»ƒ
 {	
     IplImage* TrainImage=0;
     IplImage* dst=0;
@@ -337,7 +337,7 @@ void CAIGesture::OneGestureTrain(QDir GestureDir,CvFileStorage *fs,GestureStruct
     float count[FeatureNum]={0},countsum[FeatureNum]={0};
 
     int FileCount=0;
-    /*¶ÁÈ¡¸ÃÄ¿Â¼ÏÂµÄËùÓĞjpgÎÄ¼ş*/
+    /*è¯»å–è¯¥ç›®å½•ä¸‹çš„æ‰€æœ‰jpgæ–‡ä»¶*/
     QFileInfoList list = GestureDir.entryInfoList();
     QString currentDirPath = GestureDir.absolutePath ();
     currentDirPath += "/";
@@ -387,28 +387,28 @@ void CAIGesture::OneGestureTrain(QDir GestureDir,CvFileStorage *fs,GestureStruct
             gesture.anglecha[i][j]=anglechasum[i][j]/FileCount;
         }
     }
-    cvStartWriteStruct(fs,gesture.angleName.c_str (),CV_NODE_SEQ,NULL);//¿ªÊ¼Ğ´ÈëymlÎÄ¼ş
+    cvStartWriteStruct(fs,gesture.angleName.c_str (),CV_NODE_SEQ,NULL);//å¼€å§‹å†™å…¥ymlæ–‡ä»¶
 
     int i=0;
     for(i=0;i<FeatureNum;i++)
-        cvWriteRawData(fs,&gesture.angle[i][0],10,"f");//Ğ´Èë·ôÉ«½Ç¶ÈµÄÖµ
+        cvWriteRawData(fs,&gesture.angle[i][0],10,"f");//å†™å…¥è‚¤è‰²è§’åº¦çš„å€¼
 
     cvEndWriteStruct(fs);
     cvStartWriteStruct(fs,gesture.anglechaName.c_str (),CV_NODE_SEQ,NULL);
 
     for(i=0;i<FeatureNum;i++)
-        cvWriteRawData(fs,&gesture.anglecha[i][0],10,"f");//Ğ´Èë·Ç·ôÉ«½Ç¶ÈµÄÖµ
+        cvWriteRawData(fs,&gesture.anglecha[i][0],10,"f");//å†™å…¥éè‚¤è‰²è§’åº¦çš„å€¼
 
     cvEndWriteStruct(fs);
     cvStartWriteStruct(fs,gesture.countName.c_str (),CV_NODE_SEQ,NULL);
-    cvWriteRawData(fs,&gesture.count[0],FeatureNum,"f");//Ğ´Èë·ôÉ«½Ç¶ÈµÄ¸öÊı
+    cvWriteRawData(fs,&gesture.count[0],FeatureNum,"f");//å†™å…¥è‚¤è‰²è§’åº¦çš„ä¸ªæ•°
     cvEndWriteStruct(fs);
 
     cvReleaseMemStorage(&storage);
     cvReleaseImage(&dst);
 }
 
-void CAIGesture::Train(QProgressDialog *pBar)//¶ÔÖ¸¶¨ÑµÁ·ÎÄ¼ş¼ĞÀïÃæµÄËùÓĞÊÖÊÆ½øĞĞÑµÁ·
+void CAIGesture::Train(QProgressDialog *pBar)//å¯¹æŒ‡å®šè®­ç»ƒæ–‡ä»¶å¤¹é‡Œé¢çš„æ‰€æœ‰æ‰‹åŠ¿è¿›è¡Œè®­ç»ƒ
 {
     QString curStr = QDir::currentPath ();
     QString fp1 = "InfoDoc/gestureFeatureFile.yml";
@@ -420,7 +420,7 @@ void CAIGesture::Train(QProgressDialog *pBar)//¶ÔÖ¸¶¨ÑµÁ·ÎÄ¼ş¼ĞÀïÃæµÄËùÓĞÊÖÊÆ½øĞ
     fp=fopen(fp2.toStdString ().c_str (),"w");
     int FolderCount=0;
 
-    /*»ñÈ¡µ±Ç°µÄÄ¿Â¼£¬È»ºóµÃµ½µ±Ç°µÄ×ÓÄ¿Â¼*/
+    /*è·å–å½“å‰çš„ç›®å½•ï¼Œç„¶åå¾—åˆ°å½“å‰çš„å­ç›®å½•*/
     QString trainStr = curStr;
     trainStr += "/TraningSample/";
     QDir trainDir(trainStr);
@@ -458,7 +458,7 @@ void CAIGesture::Train(QProgressDialog *pBar)//¶ÔÖ¸¶¨ÑµÁ·ÎÄ¼ş¼ĞÀïÃæµÄËùÓĞÊÖÊÆ½øĞ
     cvReleaseFileStorage(&GestureFeature);
 }
 
-//ÏÂÃæ²¿·ÖÊÇ¾²Ì¬Í¼Æ¬µÄÊ¶±ğ
+//ä¸‹é¢éƒ¨åˆ†æ˜¯é™æ€å›¾ç‰‡çš„è¯†åˆ«
 void CAIGesture::Recognise(IplImage* src, string &result)
 {
     QString curStr = QDir::currentPath ();
@@ -485,9 +485,9 @@ void CAIGesture::Recognise(IplImage* src, string &result)
     }
     delete buff;
     fclose(fp);
-    float angle[FeatureNum][10]={0},anglecha[FeatureNum][10]={0};//¶¨ÒåÇóÈ¡·ôÉ«É«¶ÈµÄÖĞ¼ä±äÁ¿
-    float Sbangle[FeatureNum][10]={0},Sbanglecha[FeatureNum][10]={0};//¶¨ÒåÇóÈ¡·Ç·ôÉ«É«¶ÈµÄÖĞ¼ä±äÁ¿
-    float angleresult[FeatureNum]={0};//¶¨ÒåÇóÈ¡½á¹ûµÄÖĞ¼ä±äÁ¿
+    float angle[FeatureNum][10]={0},anglecha[FeatureNum][10]={0};//å®šä¹‰æ±‚å–è‚¤è‰²è‰²åº¦çš„ä¸­é—´å˜é‡
+    float Sbangle[FeatureNum][10]={0},Sbanglecha[FeatureNum][10]={0};//å®šä¹‰æ±‚å–éè‚¤è‰²è‰²åº¦çš„ä¸­é—´å˜é‡
+    float angleresult[FeatureNum]={0};//å®šä¹‰æ±‚å–ç»“æœçš„ä¸­é—´å˜é‡
     float count[FeatureNum]={0};
     float Sbcount[FeatureNum]={0};
     int mask[10]={0},maskcount=0,mask1[10]={0},maskcount1=0;
@@ -516,10 +516,10 @@ void CAIGesture::Recognise(IplImage* src, string &result)
     {
         string m_tmp = GestureName[i]+"anglecountName";
         filenode=cvGetFileNodeByName(fs,NULL,m_tmp.c_str ());
-        cvReadRawData(fs,filenode,Sbcount,"f");//¶ÁÈ¡Êı¾İµ½SbcountÕâ¸öÊı×éÖĞ
+        cvReadRawData(fs,filenode,Sbcount,"f");//è¯»å–æ•°æ®åˆ°Sbcountè¿™ä¸ªæ•°ç»„ä¸­
 
         for(int j=0;j<FeatureNum;j++)
-            mask_tmp+=fabs(Sbcount[j]-count[j])*fabs(Sbcount[j]-count[j]);//ÏÈ¶Ô·ôÉ«½Ç¶ÈµÄ¸öÊı½øĞĞÆ¥Åä
+            mask_tmp+=fabs(Sbcount[j]-count[j])*fabs(Sbcount[j]-count[j]);//å…ˆå¯¹è‚¤è‰²è§’åº¦çš„ä¸ªæ•°è¿›è¡ŒåŒ¹é…
 
         if(mask_tmp<5)
         {
@@ -536,7 +536,7 @@ void CAIGesture::Recognise(IplImage* src, string &result)
         cvReadRawData(fs,filenode,Sbangle,"f");
         for(int j=0;j<FeatureNum;j++)
             for(int k=0;k<10;k++)
-                mask_tmp1+=fabs(Sbangle[j][k]-angle[j][k])*fabs(Sbangle[j][k]-angle[j][k]);//¶Ô·ôÉ«½Ç¶È½øĞĞÆ¥Åä
+                mask_tmp1+=fabs(Sbangle[j][k]-angle[j][k])*fabs(Sbangle[j][k]-angle[j][k]);//å¯¹è‚¤è‰²è§’åº¦è¿›è¡ŒåŒ¹é…
         if(mask_tmp1<10)
         {
             mask1[maskcount1]=mask[i];
@@ -551,13 +551,13 @@ void CAIGesture::Recognise(IplImage* src, string &result)
         cvReadRawData(fs,filenode,Sbanglecha,"f");
         for(int j=0;j<FeatureNum;j++)
             for(int k=0;k<10;k++)
-                angleresult[i]+=(float)(fabs(Sbanglecha[j][k]-anglecha[j][k])*fabs(Sbanglecha[j][k]-anglecha[j][k]));//¶Ô·Ç·ôÉ«½Ç¶È½øĞĞÆ¥Åä
+                angleresult[i]+=(float)(fabs(Sbanglecha[j][k]-anglecha[j][k])*fabs(Sbanglecha[j][k]-anglecha[j][k]));//å¯¹éè‚¤è‰²è§’åº¦è¿›è¡ŒåŒ¹é…
     }
     CvFont font;
     double hScale=0.7;
     double vScale=0.7;
     int lineWidth=1;
-    cvInitFont(&font,CV_FONT_HERSHEY_SIMPLEX|CV_FONT_ITALIC, hScale,vScale,0,lineWidth);//³õÊ¼»¯×ÖÌå£¬×¼±¸Ğ´µ½Í¼Æ¬ÉÏµÄ
+    cvInitFont(&font,CV_FONT_HERSHEY_SIMPLEX|CV_FONT_ITALIC, hScale,vScale,0,lineWidth);//åˆå§‹åŒ–å­—ä½“ï¼Œå‡†å¤‡å†™åˆ°å›¾ç‰‡ä¸Šçš„
     if(maskcount==0||maskcount1==0)
     {
         cvReleaseFileStorage(&fs);
@@ -574,13 +574,13 @@ void CAIGesture::Recognise(IplImage* src, string &result)
         }
     }
     result=GestureName[angletmp1];
-    //cvPutText(src,GestureName[angletmp1].c_str (),cvPoint(20,20),&font,CV_RGB(255,0,0));//ÔÚÍ¼Æ¬ÖĞÊä³öµ±Ç°Í¼Æ¬ÊÖÊÆµÄÃû×Ö
+    //cvPutText(src,GestureName[angletmp1].c_str (),cvPoint(20,20),&font,CV_RGB(255,0,0));//åœ¨å›¾ç‰‡ä¸­è¾“å‡ºå½“å‰å›¾ç‰‡æ‰‹åŠ¿çš„åå­—
     cvReleaseFileStorage(&fs);
     cvReleaseImage(&dst);
     delete []GestureName;
 }
 
-//¸ú×ÙÊÖÊÆ£¬CvBox2DÕâ¸ö½á¹¹ÀïÃæÓĞÒ»¸ö½Ç¶È±äÁ¿£¬¿ÉÄÜÒÔºó»áÓÃµ½
+//è·Ÿè¸ªæ‰‹åŠ¿ï¼ŒCvBox2Dè¿™ä¸ªç»“æ„é‡Œé¢æœ‰ä¸€ä¸ªè§’åº¦å˜é‡ï¼Œå¯èƒ½ä»¥åä¼šç”¨åˆ°
 void CAIGesture::Follow(IplImage* src,CvRect& track_window,CvBox2D &track_box)
 {
     CvConnectedComp track_comp;
@@ -596,7 +596,7 @@ void CAIGesture::Follow(IplImage* src,CvRect& track_window,CvBox2D &track_box)
     IplImage* mask_tmp4=0;
     IplImage* backproject=0;
 
-    int hdims = 150;  // »®·ÖHISTµÄ¸öÊı£¬Ô½¸ßÔ½¾«È·
+    int hdims = 150;  // åˆ’åˆ†HISTçš„ä¸ªæ•°ï¼Œè¶Šé«˜è¶Šç²¾ç¡®
     float hranges_arr[] = {0,180};
     float* hranges = hranges_arr;
     CvHistogram *hist = 0;
@@ -606,7 +606,7 @@ void CAIGesture::Follow(IplImage* src,CvRect& track_window,CvBox2D &track_box)
     s=cvCreateImage(cvGetSize(src),8,1);
     v=cvCreateImage(cvGetSize(src),8,1);
 
-    mask=cvCreateImage(cvGetSize(src),8,1);//ÑÚÂëÍ¼Ïñ
+    mask=cvCreateImage(cvGetSize(src),8,1);//æ©ç å›¾åƒ
     mask_tmp1=cvCreateImage(cvGetSize(src),8,1);
     mask_tmp2=cvCreateImage(cvGetSize(src),8,1);
     mask_tmp3=cvCreateImage(cvGetSize(src),8,1);
@@ -685,10 +685,10 @@ void CAIGesture::Follow(IplImage* src,CvRect& track_window,CvBox2D &track_box)
 
 void CAIGesture::RecogniseSeq(CvPoint pt[8], float width, float height, string &result)
 {
-    float x_min_tmp=(float)(pt[0].x);//ÔË¶¯¹ì¼£x×ø±êµÄ×îĞ¡Öµ
-    float x_max_tmp=(float)(pt[0].x);//ÔË¶¯¹ì¼£x×ø±êµÄ×î´óÖµ
-    float y_min_tmp=(float)(pt[0].y);//ÔË¶¯¹ì¼£y×ø±êµÄ×îĞ¡Öµ
-    float y_max_tmp=(float)(pt[0].y);//ÔË¶¯¹ì¼£y×ø±êµÄ×î´óÖµ
+    float x_min_tmp=(float)(pt[0].x);//è¿åŠ¨è½¨è¿¹xåæ ‡çš„æœ€å°å€¼
+    float x_max_tmp=(float)(pt[0].x);//è¿åŠ¨è½¨è¿¹xåæ ‡çš„æœ€å¤§å€¼
+    float y_min_tmp=(float)(pt[0].y);//è¿åŠ¨è½¨è¿¹yåæ ‡çš„æœ€å°å€¼
+    float y_max_tmp=(float)(pt[0].y);//è¿åŠ¨è½¨è¿¹yåæ ‡çš„æœ€å¤§å€¼
     for(int i=0;i<8;i++)
     {
         if(pt[i].x<x_min_tmp)
@@ -704,29 +704,29 @@ void CAIGesture::RecogniseSeq(CvPoint pt[8], float width, float height, string &
     {
         if(pt[7].x-pt[0].x>0)
         {
-            result="Ïò×ó";
+            result="å‘å·¦";
         }
         else
         {
-            result="ÏòÓÒ";
+            result="å‘å³";
         }
     }
     else if(x_max_tmp-x_min_tmp<width&&y_max_tmp-y_min_tmp>height)
     {
         if(pt[7].y-pt[0].y>0)
         {
-            result="ºóÍË";
+            result="åé€€";
         }
         else
         {
-            result="¹ıÀ´";
+            result="è¿‡æ¥";
         }
     }
 }
 
 void CAIGesture::SaveImage(IplImage* src)
 {
-    /*°´ÕÕÍ¼Æ¬µÄÉú³ÉÊ±¼äÀ´×÷ÎªÎÄ¼şµÄ´æ´¢Ãû*/
+    /*æŒ‰ç…§å›¾ç‰‡çš„ç”Ÿæˆæ—¶é—´æ¥ä½œä¸ºæ–‡ä»¶çš„å­˜å‚¨å*/
     QTime t = QTime::currentTime();
     QString imgname = t.toString();
     imgname.append (".jpg");
@@ -756,8 +756,8 @@ void CAIGesture::RecogniseResult(string str[], string &result)
     }
 }
 
-/*ÏÂÃæ³ÌĞò¶Î×÷Îª±¸ÓÃ£¬Ä¿Ç°»¹Ã»ÓĞµÃµ½Ó¦ÓÃ*/
-void CAIGesture::SaveForTrain(IplImage* src, CvPoint pt[8], string &result)//±£´æÒ»¸öĞòÁĞ×÷ÎªÑµÁ·ÓÃ£¬Ä¿Ç°»¹Ã»ÓÃÉÏ£¬¿ÉÄÜÒÔºó»áÓÃÉÏ£¡
+/*ä¸‹é¢ç¨‹åºæ®µä½œä¸ºå¤‡ç”¨ï¼Œç›®å‰è¿˜æ²¡æœ‰å¾—åˆ°åº”ç”¨*/
+void CAIGesture::SaveForTrain(IplImage* src, CvPoint pt[8], string &result)//ä¿å­˜ä¸€ä¸ªåºåˆ—ä½œä¸ºè®­ç»ƒç”¨ï¼Œç›®å‰è¿˜æ²¡ç”¨ä¸Šï¼Œå¯èƒ½ä»¥åä¼šç”¨ä¸Šï¼
 {
     IplImage* tmp=cvCreateImage(cvGetSize(src),8,1);
     cvZero(tmp);
@@ -773,13 +773,13 @@ void CAIGesture::SaveForTrain(IplImage* src, CvPoint pt[8], string &result)//±£´
     cvSaveImage(imgname.toStdString ().c_str (),tmp);
 }
 
-void CAIGesture::Follow(IplImage* src, CvRect& track_window, CvHistogram* &hist, bool &Flag)//ÓÃÖ¸¶¨µÄÖ±·½Í¼¸ú×ÙÎïÌå
+void CAIGesture::Follow(IplImage* src, CvRect& track_window, CvHistogram* &hist, bool &Flag)//ç”¨æŒ‡å®šçš„ç›´æ–¹å›¾è·Ÿè¸ªç‰©ä½“
 {
     CvConnectedComp track_comp;
     CvBox2D track_box;
 
-    IplImage* hsv=0;//HSVÍ¼Ïñ¿Õ¼ä
-    IplImage* h=0;//HSVÍ¼Ïñ¿Õ¼äÖĞµÄH·ÖÁ¿
+    IplImage* hsv=0;//HSVå›¾åƒç©ºé—´
+    IplImage* h=0;//HSVå›¾åƒç©ºé—´ä¸­çš„Håˆ†é‡
     IplImage* s=0;
     IplImage* v=0;
     IplImage* mask=0;
@@ -793,7 +793,7 @@ void CAIGesture::Follow(IplImage* src, CvRect& track_window, CvHistogram* &hist,
     h=cvCreateImage(cvGetSize(src),8,1);
     s=cvCreateImage(cvGetSize(src),8,1);
     v=cvCreateImage(cvGetSize(src),8,1);
-    mask=cvCreateImage(cvGetSize(src),8,1);//ÑÚÂëÍ¼Ïñ
+    mask=cvCreateImage(cvGetSize(src),8,1);//æ©ç å›¾åƒ
     mask_tmp1=cvCreateImage(cvGetSize(src),8,1);
     mask_tmp2=cvCreateImage(cvGetSize(src),8,1);
     mask_tmp3=cvCreateImage(cvGetSize(src),8,1);
@@ -818,12 +818,12 @@ void CAIGesture::Follow(IplImage* src, CvRect& track_window, CvHistogram* &hist,
     cvOr(mask_tmp3,mask_tmp2,mask_tmp2,0);
     cvOr(mask_tmp2,mask_tmp1,mask,0);
 
-    if(Flag)//µ±FlagÎªTRUEµÄ»°£¬ÏÈ¸ú×ÙºóÇóÖ±·½Í¼£¬Õâ¸öÖ±·½Í¼ÊÇÏÂÒ»ìõ¸ú×ÙµÄÖ±·½Í¼
+    if(Flag)//å½“Flagä¸ºTRUEçš„è¯ï¼Œå…ˆè·Ÿè¸ªåæ±‚ç›´æ–¹å›¾ï¼Œè¿™ä¸ªç›´æ–¹å›¾æ˜¯ä¸‹ä¸€ç¥¯è·Ÿè¸ªçš„ç›´æ–¹å›¾
     {
         cvAnd(backproject,mask,backproject,0);
         cvCalcBackProject(&h,backproject,hist);
     }
-    else//µ±FlagÎªFALSEµÄ»°£¬ÏÈÇóÖ±·½Í¼ºóÖ±½ÓÍË³ö£¬Ïàµ±ÕâÒ»ìõÊÇ×÷Îª³õÊ¼»¯ÓÃµÄ£¬²»¸ú×Ù¶ÔÏó
+    else//å½“Flagä¸ºFALSEçš„è¯ï¼Œå…ˆæ±‚ç›´æ–¹å›¾åç›´æ¥é€€å‡ºï¼Œç›¸å½“è¿™ä¸€ç¥¯æ˜¯ä½œä¸ºåˆå§‹åŒ–ç”¨çš„ï¼Œä¸è·Ÿè¸ªå¯¹è±¡
     {
         cvCalcBackProject(&h,backproject,hist);
         cvAnd(backproject,mask,backproject,0);
@@ -845,7 +845,7 @@ void CAIGesture::Follow(IplImage* src, CvRect& track_window, CvHistogram* &hist,
                cvTermCriteria( CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 10, 1 ),
                &track_comp, &track_box );
     track_window=track_comp.rect;
-    if(cvCountNonZero(mask)<40)//µ±Ä¿±êÎïÌå¹ıĞ¡Ê±ÈÏÎª¸ú×Ù¶ªÊ§£¡
+    if(cvCountNonZero(mask)<40)//å½“ç›®æ ‡ç‰©ä½“è¿‡å°æ—¶è®¤ä¸ºè·Ÿè¸ªä¸¢å¤±ï¼
     {
         cout << "Target Trace Failed !" << endl;
         cvReleaseImage(&hsv);
@@ -874,7 +874,7 @@ void CAIGesture::Follow(IplImage* src, CvRect& track_window, CvHistogram* &hist,
     cvReleaseImage(&backproject);
 }
 
-void CAIGesture::CalcHist(IplImage* src,CvRect& rect,CvHistogram* &hist)//¶ÔÒ»¸öÖ¸¶¨µÄRectÇóÖ±·½Í¼
+void CAIGesture::CalcHist(IplImage* src,CvRect& rect,CvHistogram* &hist)//å¯¹ä¸€ä¸ªæŒ‡å®šçš„Rectæ±‚ç›´æ–¹å›¾
 {
     IplImage* hsv=0;
     IplImage* h=0;

@@ -18,13 +18,13 @@ private:
 
 public:
 	void SkinDetect(IplImage* src,IplImage* dst);
-	//·ôÉ«¼ì²â,ÆäÖĞsrcÎªÊäÈëÍ¼Ïñ£¬dstÎªÊä³öÍ¼Ïñ
+	//è‚¤è‰²æ£€æµ‹,å…¶ä¸­srcä¸ºè¾“å…¥å›¾åƒï¼Œdstä¸ºè¾“å‡ºå›¾åƒ
 
 	void FindBigContour(IplImage* src,CvSeq* (&contour),CvMemStorage* storage);
-	//Çó×î´óµÄÂÖÀª£¬srcÎªÊäÈëÍ¼Ïñ£¬contourÊÇÊä³öÂÖÀª,storageÎªopencvÒ»¸öÄÚ´æ½á¹¹
+	//æ±‚æœ€å¤§çš„è½®å»“ï¼Œsrcä¸ºè¾“å…¥å›¾åƒï¼Œcontouræ˜¯è¾“å‡ºè½®å»“,storageä¸ºopencvä¸€ä¸ªå†…å­˜ç»“æ„
 
 	void ComputeCenter(CvSeq* (&contour),CvPoint& center,float &radius);
-	//¼ÆËã»ú³öÊÖÊÆµÄÖĞĞÄ£¬contourÎªÊäÈëÂÖÀª£¬centerÎªÊä³öÖĞĞÄ£¬radiusÎªÊä³ö°ë¾¶
+	//è®¡ç®—æœºå‡ºæ‰‹åŠ¿çš„ä¸­å¿ƒï¼Œcontourä¸ºè¾“å…¥è½®å»“ï¼Œcenterä¸ºè¾“å‡ºä¸­å¿ƒï¼Œradiusä¸ºè¾“å‡ºåŠå¾„
 
 	void GetFeature(IplImage* src,
 		CvPoint& center,
@@ -32,43 +32,43 @@ public:
 		float angle[FeatureNum][10],
 		float anglecha[FeatureNum][10],
 		float count[FeatureNum]);
-	//ÌáÈ¡ÊÖÊÆµÄÌØÕ÷£¬srcÎªÊäÈëÍ¼Ïñ£¬centerÎªÊäÈëÖĞĞÄ£¬radiusÎªÊäÈë°ë¾¶£¬angle,anglecha,countÎªÊä³öÌØÕ÷
+	//æå–æ‰‹åŠ¿çš„ç‰¹å¾ï¼Œsrcä¸ºè¾“å…¥å›¾åƒï¼Œcenterä¸ºè¾“å…¥ä¸­å¿ƒï¼Œradiusä¸ºè¾“å…¥åŠå¾„ï¼Œangle,anglecha,countä¸ºè¾“å‡ºç‰¹å¾
 
     void OneGestureTrain(QDir GestureDir,CvFileStorage *fs,GestureStruct gesture);
-	//¶Ôµ¥ÀàÍ¼Ïñ½øĞĞÑµÁ·£¬GesturePathÎªÊäÈëÊÖÊÆÑµÁ·ÎÄ¼ş¼Ğ£¬fsÎªÒ»¸öÎÄ¼ş´æ´¢Æ÷£¬gestureÊÇÒ»¸öÊÖÊÆ½á¹¹
+	//å¯¹å•ç±»å›¾åƒè¿›è¡Œè®­ç»ƒï¼ŒGesturePathä¸ºè¾“å…¥æ‰‹åŠ¿è®­ç»ƒæ–‡ä»¶å¤¹ï¼Œfsä¸ºä¸€ä¸ªæ–‡ä»¶å­˜å‚¨å™¨ï¼Œgestureæ˜¯ä¸€ä¸ªæ‰‹åŠ¿ç»“æ„
 
     void Train(QProgressDialog* pBar);
-	//ÑµÁ·£¬ÆäÖĞFolderPathÎªÑµÁ·Ñù±¾µÄÎÄ¼ş¼ĞÂ·¾¶
+	//è®­ç»ƒï¼Œå…¶ä¸­FolderPathä¸ºè®­ç»ƒæ ·æœ¬çš„æ–‡ä»¶å¤¹è·¯å¾„
 
     void Recognise(IplImage* src,string& result);
-	//Ê¶±ğ,srcÎªÊäÈëÍ¼Ïñ£¬resultÎªÊä³ö½á¹û
+	//è¯†åˆ«,srcä¸ºè¾“å…¥å›¾åƒï¼Œresultä¸ºè¾“å‡ºç»“æœ
 
 	void Follow(IplImage* src,CvRect& track_window,CvBox2D &track_box);
-	//ÊÖÊÆ¸ú×Ù,srcÎªÊäÈëÍ¼Ïñ£¬track_windowÎªÒ»¸ö¸ú×Ù¾ØĞÎ£¬track_boxÎªÒ»¸öÊäÈë²ÎÊı£¬Ä¿Ç°Ã»ÓÃÉÏ£¬¿ÉÄÜÒÔºó»áÓÃÉÏ
+	//æ‰‹åŠ¿è·Ÿè¸ª,srcä¸ºè¾“å…¥å›¾åƒï¼Œtrack_windowä¸ºä¸€ä¸ªè·Ÿè¸ªçŸ©å½¢ï¼Œtrack_boxä¸ºä¸€ä¸ªè¾“å…¥å‚æ•°ï¼Œç›®å‰æ²¡ç”¨ä¸Šï¼Œå¯èƒ½ä»¥åä¼šç”¨ä¸Š
 
     void RecogniseSeq(CvPoint pt[8],float width,float height,string &result);
-	//¶ÔÒ»¸öĞòÁĞ½øĞĞÊ¶±ğ£¬pt[8]ÊÇÊäÈëµÄ8¸öµã£¬resultÎªÊä³öµÄ½á¹û£¬flagÎªÅĞ¶ÏÊÇ·ñÎªµÚÒ»´Î£¬ÒòÎªÖ»ÓĞÁ½´ÎÊ¶±ğ²ÅÈÏÎªÊÇÃüÁî
+	//å¯¹ä¸€ä¸ªåºåˆ—è¿›è¡Œè¯†åˆ«ï¼Œpt[8]æ˜¯è¾“å…¥çš„8ä¸ªç‚¹ï¼Œresultä¸ºè¾“å‡ºçš„ç»“æœï¼Œflagä¸ºåˆ¤æ–­æ˜¯å¦ä¸ºç¬¬ä¸€æ¬¡ï¼Œå› ä¸ºåªæœ‰ä¸¤æ¬¡è¯†åˆ«æ‰è®¤ä¸ºæ˜¯å‘½ä»¤
 	void ColorRegulate(IplImage* src,IplImage* dst);
-	//½øĞĞÑÕÉ«Ğ£Õı£¬²»¹ıĞ§¹ûºÃÏñ²»ÊÇºÜºÃ£¬srcÎªÊäÈëÍ¼Ïñ£¬dstÎªÊä³öÍ¼Ïñ
+	//è¿›è¡Œé¢œè‰²æ ¡æ­£ï¼Œä¸è¿‡æ•ˆæœå¥½åƒä¸æ˜¯å¾ˆå¥½ï¼Œsrcä¸ºè¾“å…¥å›¾åƒï¼Œdstä¸ºè¾“å‡ºå›¾åƒ
 
 	void EqualImage(IplImage* src,IplImage*dst);
-	//Ö±·½Í¼¾ùºâ»¯,srcÎªÊäÈëÍ¼Ïñ£¬dstÎªÊä³öÍ¼Ïñ
+	//ç›´æ–¹å›¾å‡è¡¡åŒ–,srcä¸ºè¾“å…¥å›¾åƒï¼Œdstä¸ºè¾“å‡ºå›¾åƒ
 
 	void SaveImage(IplImage* src);
-	//±£´æÍ¼ÏñÓÃÒÔÑµÁ·
+	//ä¿å­˜å›¾åƒç”¨ä»¥è®­ç»ƒ
 
     void RecogniseResult(string str[8],string &result);
-	//ÌáÈ¡ÔÚstr[8]ÖĞ³öÏÖ´ÎÊı´óÓÚ6µÄ×Ö·û´®±£´æµ½resultÖĞ;
+	//æå–åœ¨str[8]ä¸­å‡ºç°æ¬¡æ•°å¤§äº6çš„å­—ç¬¦ä¸²ä¿å­˜åˆ°resultä¸­;
 
-	/*ÏÂÃæ³ÌĞò¶Î×÷Îª±¸ÓÃ£¬Ä¿Ç°»¹Ã»ÓĞµÃµ½Ó¦ÓÃ*/
+	/*ä¸‹é¢ç¨‹åºæ®µä½œä¸ºå¤‡ç”¨ï¼Œç›®å‰è¿˜æ²¡æœ‰å¾—åˆ°åº”ç”¨*/
 	void CalcHist(IplImage* src,CvRect &rect,CvHistogram* (&hist));
-	//¼ÆËãrectÄÚµÄ·ôÉ«²¿·ÖµÄÖ±·½Í¼
+	//è®¡ç®—rectå†…çš„è‚¤è‰²éƒ¨åˆ†çš„ç›´æ–¹å›¾
 
     void Follow(IplImage* src,CvRect& track_window,CvHistogram* &hist,bool& Flag);
-	//¶ÔÊÖÊÆ½øĞĞ¸ú×Ù
+	//å¯¹æ‰‹åŠ¿è¿›è¡Œè·Ÿè¸ª
 
     void SaveForTrain(IplImage* src,CvPoint pt[8],string &result);
-	//¶ÔÒ»¸öµãµÄĞòÁĞ½øĞĞ±£´æ£¬¿ÉÒÔÑµÁ·£¬¿ÉÒÔÓÃHMMÄ£ĞÍÊÔÒ»ÏÂ£¬²»¹ı£¬HMMÄ£ĞÍ¿´²»³ö·½Ïò£¬Ó¦¸ÃÖ¸Ã÷·½Ïò
+	//å¯¹ä¸€ä¸ªç‚¹çš„åºåˆ—è¿›è¡Œä¿å­˜ï¼Œå¯ä»¥è®­ç»ƒï¼Œå¯ä»¥ç”¨HMMæ¨¡å‹è¯•ä¸€ä¸‹ï¼Œä¸è¿‡ï¼ŒHMMæ¨¡å‹çœ‹ä¸å‡ºæ–¹å‘ï¼Œåº”è¯¥æŒ‡æ˜æ–¹å‘
 
     void Location(IplImage* src[8],MyRect& rect);
 };

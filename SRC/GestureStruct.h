@@ -20,7 +20,7 @@
 using namespace std;
 using namespace cv;
 
-const int FeatureNum=5;//¶¨ÒåÊÖÊÆÌØÕ÷µÄÈ¦Êı
+const int FeatureNum=5;//å®šä¹‰æ‰‹åŠ¿ç‰¹å¾çš„åœˆæ•°
 
 #define LEFT    0x01
 #define RIGHT   0x02
@@ -90,15 +90,15 @@ typedef struct _MyRect
     int Height(){return m_height;}
 }MyRect;
 
-struct GestureStruct//¶¨ÒåÒ»¸öÊÖÊÆ½á¹¹
+struct GestureStruct//å®šä¹‰ä¸€ä¸ªæ‰‹åŠ¿ç»“æ„
 {
-    float angle[FeatureNum][10];//·ôÉ«½Ç¶È
-    float anglecha[FeatureNum][10];//·Ç·ôÉ«½Ç¶È
-    float count[FeatureNum];//½Ç¶È·ôÉ«µÄ¸öÊı
-    string GestureName;//ÊÖÊÆÃû×Ö
-    string angleName;//½Ç¶ÈµÄÃû×Ö£¬ÓÃÓÚĞ´ÈëymlÎÄ¼ş×÷ÎªÒ»¸ö½Úµã£¬ÓÃÓÚÊ¶±ğµÄÊ±ºòÍ¨¹ıÊ¶±ğÀ´ÌáÈ¡²ÎÊı
-    string anglechaName;//½Ç¶ÈµÄÃû×Ö£¬ÓÃÓÚĞ´ÈëymlÎÄ¼ş×÷ÎªÒ»¸ö½Úµã£¬ÓÃÓÚÊ¶±ğµÄÊ±ºòÍ¨¹ıÊ¶±ğÀ´ÌáÈ¡²ÎÊı
-    string countName;//½Ç¶ÈµÄ¸öÊı£¬¿ÉÒÔÀí½âÎª¶àÉÙ¸öÊÖÖ¸£¨µ«Êµ¼ÊÉÏ²»Ö»ÊÇÕâÑù),ÓÃÓÚĞ´ÈëymlÎÄ¼ş×÷ÎªÒ»¸ö½Úµã£¬ÓÃÓÚÊ¶±ğµÄÊ±ºòÍ¨¹ıÊ¶±ğÀ´ÌáÈ¡²ÎÊı
+    float angle[FeatureNum][10];//è‚¤è‰²è§’åº¦
+    float anglecha[FeatureNum][10];//éè‚¤è‰²è§’åº¦
+    float count[FeatureNum];//è§’åº¦è‚¤è‰²çš„ä¸ªæ•°
+    string GestureName;//æ‰‹åŠ¿åå­—
+    string angleName;//è§’åº¦çš„åå­—ï¼Œç”¨äºå†™å…¥ymlæ–‡ä»¶ä½œä¸ºä¸€ä¸ªèŠ‚ç‚¹ï¼Œç”¨äºè¯†åˆ«çš„æ—¶å€™é€šè¿‡è¯†åˆ«æ¥æå–å‚æ•°
+    string anglechaName;//è§’åº¦çš„åå­—ï¼Œç”¨äºå†™å…¥ymlæ–‡ä»¶ä½œä¸ºä¸€ä¸ªèŠ‚ç‚¹ï¼Œç”¨äºè¯†åˆ«çš„æ—¶å€™é€šè¿‡è¯†åˆ«æ¥æå–å‚æ•°
+    string countName;//è§’åº¦çš„ä¸ªæ•°ï¼Œå¯ä»¥ç†è§£ä¸ºå¤šå°‘ä¸ªæ‰‹æŒ‡ï¼ˆä½†å®é™…ä¸Šä¸åªæ˜¯è¿™æ ·),ç”¨äºå†™å…¥ymlæ–‡ä»¶ä½œä¸ºä¸€ä¸ªèŠ‚ç‚¹ï¼Œç”¨äºè¯†åˆ«çš„æ—¶å€™é€šè¿‡è¯†åˆ«æ¥æå–å‚æ•°
 };
 
 #endif
