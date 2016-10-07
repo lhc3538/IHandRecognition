@@ -99,6 +99,7 @@ void HandGestureDialog::StartRecongizeHand (IplImage *img)
             pt1.y = r->y*scale;
             pt2.y = (r->y+r->height)*scale;
 
+            cout << "area:" << r->width*r->height << endl;
             // Draw the rectangle in the input image
             cvRectangle( img, pt1, pt2, CV_RGB(230,20,232), 3, 8, 0 );
         }
@@ -106,7 +107,7 @@ void HandGestureDialog::StartRecongizeHand (IplImage *img)
 
     // Show the image in the window named "result"
     cvShowImage( "result", img );
-    cvWaitKey (30);
+    //cvWaitKey (30);
 }
 
 //void HandGestureDialog::readFarme()
@@ -214,7 +215,7 @@ void HandGestureDialog::on_pushButton_StartRecongnise_clicked()
 
     status_switch = Recongnise;
 
-    cvNamedWindow("Example1",CV_WINDOW_AUTOSIZE);
+//    cvNamedWindow("Example1",CV_WINDOW_AUTOSIZE);
 }
 
 void HandGestureDialog::on_comboBox_ShowDelay_activated(int index)
