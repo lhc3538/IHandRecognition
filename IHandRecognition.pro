@@ -11,13 +11,15 @@ SOURCES += main.cpp\
         handgesturedialog.cpp \
     SRC/GestrueInfo.cpp \
     SRC/AIGesture.cpp \
-    IplImageToQImage.cpp
+    IplImageToQImage.cpp \
+    facedetect.cpp
 
 HEADERS  += handgesturedialog.h \
     SRC/GestureStruct.h \
     SRC/GestrueInfo.h \
     SRC/AIGesture.h \
-    IplImageToQImage.h
+    IplImageToQImage.h \
+    facedetect.h
 
 FORMS    += handgesturedialog.ui
 

@@ -45,7 +45,7 @@ HandGestureDialog::~HandGestureDialog()
     free(qImageBuffer);
 }
 
-void HandGestureDialog::StartRecongizeHand (IplImage *img)
+CvPoint HandGestureDialog::StartRecongizeHand (IplImage *img)
 {
     // Create a string that contains the exact cascade name
     // Contains the trained classifer for detecting hand
@@ -66,14 +66,14 @@ void HandGestureDialog::StartRecongizeHand (IplImage *img)
     if( !cascade )
     {
         fprintf( stderr, "ERROR: Could not load classifier cascade\n" );
-        return;
+        return CvPoint(-1,-1);
     }
 
     // Allocate the memory storage
     storage = cvCreateMemStorage(0);
 
     // Create a new named window with title: result
-    cvNamedWindow( "result", 1 );
+//    cvNamedWindow( "result", 1 );
 
     // Clear the memory storage which was used before
     cvClearMemStorage( storage );
@@ -99,40 +99,19 @@ void HandGestureDialog::StartRecongizeHand (IplImage *img)
             pt1.y = r->y*scale;
             pt2.y = (r->y+r->height)*scale;
 
-            cout << "area:" << r->width*r->height << endl;
             // Draw the rectangle in the input image
-            cvRectangle( img, pt1, pt2, CV_RGB(230,20,232), 3, 8, 0 );
+//            cvRectangle( img, pt1, pt2, CV_RGB(230,20,232), 3, 8, 0 );
+
+            //retun the rect's center
+            return CvPoint(r->x+r->width/2,r->y+r->height);
         }
     }
 
     // Show the image in the window named "result"
-    cvShowImage( "result", img );
+//    cvShowImage( "result", img );
     //cvWaitKey (30);
+    return CvPoint(-1,-1);
 }
-
-//void HandGestureDialog::readFarme()
-//{
-//    frame = cvQueryFrame(cam);
-//    QImage image((const uchar*)frame->imageData,
-//                 frame->width,
-//                 frame->height,
-//                 QImage::Format_RGB888);
-//    image = image.rgbSwapped();
-//    image = image.scaled(320,240);
-//    ui->label_CameraShow->setPixmap(QPixmap::fromImage(image));
-//    gesture.SkinDetect (frame,afterSkin);
-
-//    /*next to opencv*/
-
-//    if(status_switch == Recongnise)
-//    {
-//        // Flips the frame into mirror image
-//        cvFlip(frame,frame,1);
-
-//        // Call the function to detect and draw the hand positions
-//        StartRecongizeHand(frame);
-//    }
-//}
 
 void HandGestureDialog::on_pushButton_OpenCamera_clicked()
 {
@@ -146,6 +125,8 @@ void HandGestureDialog::on_pushButton_OpenCamera_clicked()
     ui->pushButton_ShowPause->setEnabled (true);
     ui->pushButton_SnapImage->setEnabled (true);
     afterSkin = cvCreateImage (cvSize(320,240),IPL_DEPTH_8U,1);
+
+//    cvNamedWindow("faceImg",CV_WINDOW_AUTOSIZE);
 }
 
 void HandGestureDialog::on_pushButton_SnapImage_clicked()
@@ -288,6 +269,51 @@ void HandGestureDialog::read()
                 IplImage* img=cvCreateImage(size,IPL_DEPTH_8U, 3);//与cvReleaseImage配对使用
                 QImageToIplImage(&image,img);
 
+//                Mat matFace = cvarrToMat(img);
+//                if( !matFace.empty() )
+//                {
+//                    facedetect.detectAndDraw( matFace );
+//                }
+                //imshow( "faceImg", matFace );
+
+                static int hand_count = 0;
+                static int nohand_count = 0;
+                // Call the function to detect and draw the hand positions,return a rect's center point
+                CvPoint handPos = StartRecongizeHand(img);
+                if (handPos.x<0 && handPos.y<0)
+                {
+                    ++nohand_count;
+                    hand_count = 0;
+                }
+                else
+                {
+                    ++hand_count;
+                    nohand_count = 0;
+                }
+                cout << "hand=" << hand_count << ",nohand=" << nohand_count << endl;
+
+                if (hand_count >= 5)
+                {
+
+                    string rult;
+                    CvPoint centerPos = gesture.Recognise(img,rult);
+                    static CvPoint startPos = cvPoint(0,0);
+                    if (hand_count == 5)
+                        startPos = centerPos;
+
+                    ui->label_ShowResult->setText(QString::number(abs(centerPos.x-startPos.x)
+                                                                  +abs(centerPos.y-startPos.y)));
+                }
+                if (nohand_count >= 15)
+                {
+                    ui->label_ShowResult->clear();
+                }
+
+                /*next to opencv*/
+//                string rult;
+//                gesture.Recognise(img,rult);
+//                if (rult.length()!=0)
+//                    cout << rult << endl;
                 //***send img to hand gesture***/
                 QImage image2((const uchar*)img->imageData,
                              img->width,
@@ -296,21 +322,6 @@ void HandGestureDialog::read()
                 image2 = image2.rgbSwapped();
                 image2 = image2.scaled(320,240);
                 ui->label_CameraShow->setPixmap(QPixmap::fromImage(image2));
-
-
-                /*next to opencv*/
-
-                if(status_switch == Recongnise)
-                {
-                    //gesture.SkinDetect (img,afterSkin);
-
-                    //cvShowImage("Example1", afterSkin);
-                    // Flips the frame into mirror image
-                    //cvFlip(img,img,1);
-
-                    // Call the function to detect and draw the hand positions
-                    StartRecongizeHand(img);
-                }
 
                 cvReleaseImage(&img);//与cvCreateImage配对使用
                 ba.clear();

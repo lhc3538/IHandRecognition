@@ -40,7 +40,7 @@ public:
     void Train(QProgressDialog* pBar);
 	//训练，其中FolderPath为训练样本的文件夹路径
 
-    void Recognise(IplImage* src,string& result);
+    CvPoint Recognise(IplImage* src,string& result);
 	//识别,src为输入图像，result为输出结果
 
 	void Follow(IplImage* src,CvRect& track_window,CvBox2D &track_box);

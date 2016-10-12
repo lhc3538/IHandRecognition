@@ -459,7 +459,7 @@ void CAIGesture::Train(QProgressDialog *pBar)//对指定训练文件夹里面的
 }
 
 //下面部分是静态图片的识别
-void CAIGesture::Recognise(IplImage* src, string &result)
+CvPoint CAIGesture::Recognise(IplImage* src, string &result)
 {
     QString curStr = QDir::currentPath ();
     FILE* fp;
@@ -508,6 +508,8 @@ void CAIGesture::Recognise(IplImage* src, string &result)
                 cvPoint(bndRect.x+bndRect.width,bndRect.y+bndRect.height),
                 CV_RGB(244,0,0));
     GetFeature(dst,center,radius,angle,anglecha,count);
+
+//    cvShowImage("ShowImage1",dst);
     QString f2 = "infoDoc/gestureFeatureFile.yml";
     f2 = curStr+"/"+f2;
     CvFileStorage *fs=cvOpenFileStorage(f2.toStdString ().c_str (),0,CV_STORAGE_READ);
@@ -561,7 +563,7 @@ void CAIGesture::Recognise(IplImage* src, string &result)
     if(maskcount==0||maskcount1==0)
     {
         cvReleaseFileStorage(&fs);
-        return;
+        return center;
     }
     float angletmp=angleresult[0];
     int angletmp1=0;
@@ -578,6 +580,8 @@ void CAIGesture::Recognise(IplImage* src, string &result)
     cvReleaseFileStorage(&fs);
     cvReleaseImage(&dst);
     delete []GestureName;
+    //return center point
+    return center;
 }
 
 //跟踪手势，CvBox2D这个结构里面有一个角度变量，可能以后会用到

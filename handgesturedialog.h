@@ -17,6 +17,7 @@
 #include "SRC/GestureStruct.h"
 #include "SRC/AIGesture.h"
 #include "SRC/GestrueInfo.h"
+#include "facedetect.h"
 
 using namespace std;
 using namespace cv;
@@ -32,7 +33,9 @@ class HandGestureDialog : public QDialog
 public:
     explicit HandGestureDialog(QWidget *parent = 0);
     ~HandGestureDialog();
-    void StartRecongizeHand(IplImage* img);
+    CvPoint StartRecongizeHand(IplImage* img);
+
+private:
 
 private slots:
 //    void readFarme();
@@ -52,6 +55,7 @@ private slots:
 private:
     Ui::HandGestureDialog *ui;
     CAIGesture gesture;
+    FaceDetect facedetect;
     int isRun;
     /**CAMERA PARAMETER**/
     IplImage  *frame;
@@ -66,7 +70,6 @@ private:
     CvBox2D track_box;
     CvMemStorage* storage;
     CvSeq* pt_seq;
-    string result[8];
     int gesturecount;
     CvPoint2D32f center;//用来储存手势的质心
     float r;//手势的半径
